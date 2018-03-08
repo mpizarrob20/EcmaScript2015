@@ -396,8 +396,204 @@ function isFullAgess6(limit, ...yearss) {
 isFullAgess6(16, 1990, 1999, 1965, 2016, 1987);
 
 
+///////////////////////////////////////////////////////////////////////
+////Lecture: Default parameters
+
+//ES5
+function SmithPerson(firstNameDP, yearOfBirthDP, lastNameDP, nationality) {
+    
+    lastNameDP === undefined ? lastNameDP = 'Smith' : lastNameDP = lastNameDP;
+    nationality === undefined ? nationality = 'american' : nationality = nationality;
+    
+    this.firstNameDP = firstNameDP;
+    this.lastNameDP = lastNameDP;
+    this.yearOfBirthDP = yearOfBirthDP;
+    this.nationality = nationality;
+}
+
+var john = new SmithPerson('John', 1990);
+var emily = new SmithPerson('Emily', 1983, 'Diaz', 'spanish');
 
 
+//ES5
+function SmithPerson(firstNameDP, yearOfBirthDP, lastNameDP, nationality) {
+    
+    lastNameDP === undefined ? lastNameDP = 'Smith' : lastNameDP = lastNameDP;
+    nationality === undefined ? nationality = 'american' : nationality = nationality;
+    
+    this.firstNameDP = firstNameDP;
+    this.lastNameDP = lastNameDP;
+    this.yearOfBirthDP = yearOfBirthDP;
+    this.nationality = nationality;
+}
+
+var john = new SmithPerson('John', 1990);
+var emily = new SmithPerson('Emily', 1983, 'Diaz', 'spanish');
+
+
+
+//ES6
+function JhonsonPerson(firstNameJP, yearOfBirthJP, lastNameJP = 'Jhonson', nationalityJP = 'chinese') {
+    
+    this.firstNameJP = firstNameJP;
+    this.lastNameJP = lastNameJP;
+    this.yearOfBirthJP = yearOfBirthJP;
+    this.nationalityJP = nationalityJP;
+}
+
+var luca = new JhonsonPerson('Luca', 1990);
+var lisa = new JhonsonPerson('Lisa', 1983, 'Diaz', 'american');
+
+///////////////////////////////////////////////////////////////////
+/// Lecture: Maps
+
+const question = new Map(); // empty map
+question.set('question', 'What is the official name of the lastest major javascript version');
+question.set(1, 'ES5');
+question.set(2, 'ES6');
+question.set(3, 'ES2015');
+question.set(4, 'ES7');
+question.set('correct', 3);
+question.set(true, 'Correct answer :D');
+question.set(false, 'Wrong, please try again!');
+
+//Para ver lo que tiene el map, solo escribo en la consola el nombre del map
+
+console.log(question.get('question')); // le paso la llave y me devuelve el valor
+console.log(question.size); // dimension del map
+
+if(question.has(4)){
+    //question.delete(4); //elimina un elemento especifico
+    console.log('Answer 4 is here');
+}
+
+//Elimina todo de uan vez
+//question.clear;
+
+
+//question.forEach((value, key) => console.log('This is ${key}, and its set to ${value}'));
+
+for(let [key, value] of question.entries()){
+    //console.log('This is ${key}, and its set to ${value}');
+    if(typeof(key) === 'number') {
+        console.log(`Answer ${key}: ${value}`);
+    }
+}
+
+//const ans = parseInt(prompt('Write the correct answer'));
+//console.log(question.get(ans === question.get('correct')));
+
+
+//////////////////////////////////////////////////////////
+/// Lecture: Classes
+
+//ES5
+var Person5 = function(name, yearOfBirth5, job){
+    this.name = name;
+    this.yearOfBirth5 = yearOfBirth5;
+    this.job = job;
+}
+
+Person5.prototype.calculateAge = function() {
+    var age = new Date().getFullYear() - this.yearOfBirth5;
+    console.log(age);
+}
+
+var john5 = new Person5 ('John', 1990, 'teacher');
+
+
+//ES6
+class Person6 {
+    constructor (name6, yearOfBirth6, job6) {
+        this.name6 = name6;
+        this.yearOfBirth6 = yearOfBirth6;
+        this.job6 = job6;
+    }
+    
+    calculateAge() {
+        var age6 = new Date().getFullYear() - this.yearOfBirth6;
+        console.log(age6);
+    }
+    
+    static greeting(){
+        console.log('Here there!');
+    }
+}
+
+
+const john6 = new Person6('John6', 1990, 'teacher');
+Person6.greeting();
+
+
+////////////////////////////////////////////////////////
+// Lecture: Classes and subclasses
+
+//ES5
+var PersonCC = function(nameCC, yearOfBirthCC, jobCC){
+    this.nameCC = nameCC;
+    this.yearOfBirthCC = yearOfBirthCC;
+    this.jobCC = jobCC;
+}
+
+PersonCC.prototype.calculateAge = function() {
+    var age = new Date().getFullYear() - this.yearOfBirthCC;
+    console.log(age);
+}
+
+var johnCC = new PersonCC ('John', 1990, 'teacher');
+
+var Athlete5 = function(name, yearOfBirth, job, olymicGames, medals){
+    
+    Person5.call(this, name, yearOfBirth, job);
+    this.olymicGames = olymicGames;
+    this.medals = medals;
+    
+}
+
+Athlete5.prototype = Object.create(Person5.prototype);
+var johnAthlete5 = new Athlete5('John', 1990, 'swimmer', 3, 10);
+
+Athlete5.prototype.wonMedal = function(){
+    this.medals++;
+    console.log(this.medals);
+}
+
+johnAthlete5.calculateAge();
+johnAthlete5.wonMedal();
+
+
+//ES6
+class PersonCC6 {
+    constructor (name6, yearOfBirth6, job6) {
+        this.name6 = name6;
+        this.yearOfBirth6 = yearOfBirth6;
+        this.job6 = job6;
+    }
+    
+    calculateAge() {
+        var age6 = new Date().getFullYear() - this.yearOfBirth6;
+        console.log(age6);
+    }
+}
+
+class Athlete6 extends PersonCC6{
+    constructor(name, yearOfBirth, job, olymicGames, medals) {
+        super(name, yearOfBirth, job);
+        this.olymicGames = olymicGames;
+        this.medals = medals;        
+    }
+    
+    wonMedal(){
+        this.medals++;
+        console.log(this.medals);
+    }
+}
+
+
+const johnAthlete6 = new Athlete6('John6', 1990, 'swimmer', 3, 10);
+
+johnAthlete6.wonMedal();
+johnAthlete5.calculateAge();
 
 
 
